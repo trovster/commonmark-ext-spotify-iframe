@@ -1,19 +1,24 @@
 # Spotify iframe extension
 
 An extension for [league/commonmark](https://github.com/thephpleague/commonmark)
-version 1. to replace Spotify links with the embed iframe. Initially based on
-the [YouTube extension](https://github.com/zoonru/commonmark-ext-youtube-iframe).
+version 1 built using PHP 7.4. This replaces Spotify links with the embed iframe.
 
 The extension supports for tracks, artists, albums and playlists using the embed
 URL format.
 
-## Install
+Initially based on the [YouTube extension](https://github.com/zoonru/commonmark-ext-youtube-iframe).
+
+## Installation
+
+The project should be installed via Composer:
 
 ```bash
 composer require surface/commonmark-ext-spotify-iframe
 ```
 
-## Examples
+## Usage
+
+Configure your CommonMark `Environment` and add the extension.
 
 ```php
 use League\CommonMark\CommonMarkConverter as Converter;
@@ -51,3 +56,33 @@ URL. The supported sizes are `large`, `lg`, `small` and `sm`.
 ?size=lg
 ?size=sm
 ```
+
+## Testing
+
+There are Unit and Integration tests for the project. These can be run using
+the following commands:
+
+```bash
+composer test
+composer run test
+composer run test-unit
+composer run test-integration
+```
+
+There are also scripts to run code sniffer, mess detector and static analysis:
+
+```bash
+composer run sniff
+composer run mess
+composer run stan
+```
+
+## Changelog
+
+Please refer to the [CHANGELOG](CHANGELOG.md) for more information on what has
+changed recently.
+
+## License
+
+This library is licensed under the MIT license. See the
+[License File](LICENSE.md) for more information.
