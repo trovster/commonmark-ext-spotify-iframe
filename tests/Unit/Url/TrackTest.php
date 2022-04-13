@@ -30,9 +30,8 @@ final class TrackTest extends TestCase
     /**
      * @test
      * @dataProvider themesProvider
-     * @param int|string $theme
      */
-    public function urlWithTheme($theme, int $result): void
+    public function urlWithTheme(int|string $theme, int $result): void
     {
         $url = $this->parser->parse("{$this->url}?theme={$theme}");
 
@@ -47,9 +46,8 @@ final class TrackTest extends TestCase
     /**
      * @test
      * @dataProvider sizesProvider
-     * @param int|string $size
      */
-    public function urlWithSize($size, string $result): void
+    public function urlWithSize(int|string $size, string $result): void
     {
         $url = $this->parser->parse("{$this->url}?size={$size}");
 

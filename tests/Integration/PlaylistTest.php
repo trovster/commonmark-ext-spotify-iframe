@@ -2,9 +2,6 @@
 
 namespace Surface\CommonMark\Ext\SpotifyIframe\Tests\Integration;
 
-use League\CommonMark\CommonMarkConverter;
-use League\CommonMark\Environment;
-use Surface\CommonMark\Ext\SpotifyIframe\Extension;
 use Surface\CommonMark\Ext\SpotifyIframe\Tests\TestCase;
 
 /** @group playlist */
@@ -19,11 +16,7 @@ final class PlaylistTest extends TestCase
     {
         $markdown = "[]({$this->url})";
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new Extension());
-        $converter = new CommonMarkConverter([], $environment);
-
-        $html = $converter->convertToHtml($markdown);
+        $html = $this->converter->convert($markdown);
 
         $this->assertStringContainsString($this->getHtml($this->url, 380), $html);
     }
@@ -34,11 +27,7 @@ final class PlaylistTest extends TestCase
         $url = "{$this->url}?theme=1";
         $markdown = "[]({$url})";
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new Extension());
-        $converter = new CommonMarkConverter([], $environment);
-
-        $html = $converter->convertToHtml($markdown);
+        $html = $this->converter->convert($markdown);
 
         $this->assertStringContainsString($this->getHtml($url, 380), $html);
     }
@@ -52,17 +41,15 @@ final class PlaylistTest extends TestCase
         $url = "{$this->url}?size={$size}";
         $markdown = "[]({$url})";
 
-        $environment = Environment::createCommonMarkEnvironment();
-        $environment->addExtension(new Extension());
-        $converter = new CommonMarkConverter([], $environment);
-
-        $html = $converter->convertToHtml($markdown);
+        $html = $this->converter->convert($markdown);
 
         $this->assertStringContainsString($this->getHtml($this->url, $width), $html);
     }
 
     protected function setUp(): void
     {
+        parent::setUp();
+
         $this->type = 'playlist';
         $this->uuid = uniqid();
         $this->url = "https://open.spotify.com/embed/{$this->type}/{$this->uuid}";

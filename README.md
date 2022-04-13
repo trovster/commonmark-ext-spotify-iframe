@@ -1,7 +1,7 @@
 # Spotify iframe extension
 
 An extension for [league/commonmark](https://github.com/thephpleague/commonmark)
-version 1 built using PHP 7.4. This replaces Spotify links with the embed iframe.
+version 2 built using PHP 8.0. This replaces Spotify links with the embed iframe.
 
 The extension supports for tracks, artists, albums and playlists using the embed
 URL format.
@@ -21,24 +21,23 @@ composer require surface/commonmark-ext-spotify-iframe
 Configure your CommonMark `Environment` and add the extension.
 
 ```php
-use League\CommonMark\CommonMarkConverter as Converter;
-// use League\CommonMark\GithubFlavoredMarkdownConverter as Converter;
-use League\CommonMark\Environment;
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\MarkdownConverter as Converter;
 use Surface\CommonMark\Ext\SpotifyIframe\Extension as SpotifyExtension;
 
-$environment = Environment::createCommonMarkEnvironment();
-$environment->addExtension(new SpotifyExtension());
-
-$config = [
+$options = [
     'spotify_size' => 'large',
 ];
 
-$converter = new Converter($config, $environment);
+$environment = new Environment($options);
+$environment->addExtension(new SpotifyExtension());
 
-echo $converter->convertToHtml('[](https://open.spotify.com/embed/artist/xxx)');
-echo $converter->convertToHtml('[](https://open.spotify.com/embed/track/xxx?theme=0)');
-echo $converter->convertToHtml('[](https://open.spotify.com/embed/album/xxx?theme=1&size=small)');
-echo $converter->convertToHtml('[](https://open.spotify.com/embed/playlist/xxx?theme=1&size=lg)');
+$converter = new Converter($environment);
+
+echo $converter->convert('[](https://open.spotify.com/embed/artist/xxx)');
+echo $converter->convert('[](https://open.spotify.com/embed/track/xxx?theme=0)');
+echo $converter->convert('[](https://open.spotify.com/embed/album/xxx?theme=1&size=small)');
+echo $converter->convert('[](https://open.spotify.com/embed/playlist/xxx?theme=1&size=lg)');
 ```
 
 ### Sizes

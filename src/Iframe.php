@@ -2,16 +2,13 @@
 
 namespace Surface\CommonMark\Ext\SpotifyIframe;
 
-use League\CommonMark\Inline\Element\AbstractInline;
+use League\CommonMark\Node\Inline\AbstractInline;
 use Surface\CommonMark\Ext\SpotifyIframe\Url\Contracts\Url;
 
 final class Iframe extends AbstractInline
 {
-    protected Url $url;
-
-    public function __construct(Url $url)
+    public function __construct(protected Url $url)
     {
-        $this->url = $url;
     }
 
     public function getUrl(): Url

@@ -16,13 +16,11 @@ abstract class Parser implements Contract
         'small',
         'sm',
     ];
-    protected string $defaultSize;
     protected string $type;
 
-    public function __construct(string $defaultSize = 'large')
+    public function __construct(protected string $defaultSize = 'large')
     {
         $this->setType();
-        $this->defaultSize = $defaultSize;
     }
 
     public function parse(string $url): ?Url

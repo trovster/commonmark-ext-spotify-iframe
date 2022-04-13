@@ -134,9 +134,8 @@ final class ParserTest extends TestCase
     /**
      * @test
      * @dataProvider sizesProvider
-     * @param int|string $size
      */
-    public function getSizeCorrectly($size, string $same): void
+    public function getSizeCorrectly(int|string $size, string $same): void
     {
         $uuid = uniqid();
         $url = "https://example.com/embed/example/{$uuid}?size={$size}";
@@ -164,9 +163,8 @@ final class ParserTest extends TestCase
     /**
      * @test
      * @dataProvider themesProvider
-     * @param int|string $theme
      */
-    public function urlWithTheme($theme, int $same): void
+    public function urlWithTheme(int|string $theme, int $same): void
     {
         $uuid = uniqid();
         $url = "https://example.com/example/{$uuid}?theme={$theme}";
@@ -183,10 +181,9 @@ final class ParserTest extends TestCase
         $this->parser = $this->getMockForAbstractClass(Parser::class, [], 'Example');
     }
 
-    /** @return mixed */
-    protected function invokeMethod(object $object, string $methodName, array $parameters = [])
+    protected function invokeMethod(object $object, string $methodName, array $parameters = []): mixed
     {
-        $reflection = new ReflectionClass(get_class($object));
+        $reflection = new ReflectionClass($object::class);
         $method = $reflection->getMethod($methodName);
         $method->setAccessible(true);
 

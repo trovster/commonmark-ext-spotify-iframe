@@ -2,7 +2,7 @@
 
 namespace Surface\CommonMark\Ext\SpotifyIframe;
 
-use League\CommonMark\ConfigurableEnvironmentInterface;
+use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
 use League\CommonMark\Extension\ExtensionInterface;
 use Surface\CommonMark\Ext\SpotifyIframe\Iframe;
@@ -15,11 +15,10 @@ use Surface\CommonMark\Ext\SpotifyIframe\Url\Parsers\Track;
 
 final class Extension implements ExtensionInterface
 {
-    /** @return void */
-    public function register(ConfigurableEnvironmentInterface $environment)
+    public function register(EnvironmentBuilderInterface $environment): void
     {
-        $size = (string) $environment->getConfig('spotify_size', 'large');
-        $fullScreen = (bool) $environment->getConfig('spotify_allowfullscreen', true);
+        $size = $this->getSize($environment);
+        $fullScreen = $this->allowFullscreen($environment);
 
         $environment
             ->addEventListener(DocumentParsedEvent::class, new Processor([
@@ -28,10 +27,28 @@ final class Extension implements ExtensionInterface
                 new Playlist($size),
                 new Track($size),
             ]))
-            ->addInlineRenderer(Iframe::class, new Renderer(
+            ->addRenderer(Iframe::class, new Renderer(
                 $size,
                 $fullScreen
             ))
         ;
+    }
+
+    protected function getSize(EnvironmentBuilderInterface $environment): string
+    {
+        if ($environment->getConfiguration()->exists('spotify_size')) {
+            return (string) $environment->getConfiguration()->get('spotify_size');
+        }
+
+        return 'large';
+    }
+
+    protected function allowFullscreen(EnvironmentBuilderInterface $environment): bool
+    {
+        if ($environment->getConfiguration()->exists('spotify_allowfullscreen')) {
+            return (bool) $environment->getConfiguration()->get('spotify_allowfullscreen');
+        }
+
+        return true;
     }
 }

@@ -6,17 +6,12 @@ use Surface\CommonMark\Ext\SpotifyIframe\Url\Contracts\Url as Contract;
 
 final class Url implements Contract
 {
-    protected string $type;
-    protected string $uuid;
-    protected ?string $size;
-    protected ?int $theme;
-
-    public function __construct(string $type, string $uuid, ?string $size = null, ?int $theme = null)
-    {
-        $this->type = $type;
-        $this->uuid = $uuid;
-        $this->size = $size;
-        $this->theme = $theme;
+    public function __construct(
+        protected string $type,
+        protected string $uuid,
+        protected ?string $size = null,
+        protected ?int $theme = null
+    ) {
     }
 
     public function getType(): string

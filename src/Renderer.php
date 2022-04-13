@@ -3,32 +3,28 @@
 namespace Surface\CommonMark\Ext\SpotifyIframe;
 
 use InvalidArgumentException;
-use League\CommonMark\ElementRendererInterface;
-use League\CommonMark\HtmlElement;
-use League\CommonMark\Inline\Element\AbstractInline;
-use League\CommonMark\Inline\Renderer\InlineRendererInterface;
+use League\CommonMark\Node\Node;
+use League\CommonMark\Renderer\ChildNodeRendererInterface;
+use League\CommonMark\Renderer\NodeRendererInterface;
+use League\CommonMark\Util\HtmlElement;
 use Surface\CommonMark\Ext\SpotifyIframe\Iframe;
 
-final class Renderer implements InlineRendererInterface
+final class Renderer implements NodeRendererInterface
 {
-    protected string $size;
     protected string $height;
     protected string $width = '100%';
-    protected bool $allowFullScreen;
 
-    public function __construct(string $size, bool $allowFullScreen = false)
+    public function __construct(protected string $size, protected bool $allowFullScreen = false)
     {
-        $this->size = $size;
         $this->height = $this->getHeight($size);
-        $this->allowFullScreen = $allowFullScreen;
     }
 
-    /** @return \League\CommonMark\HtmlElement|string|null */
+    /** @return \League\CommonMark\Util\HtmlElement|string|null */
     // phpcs:ignore SlevomatCodingStandard.Functions.UnusedParameter.UnusedParameter
-    public function render(AbstractInline $inline, ElementRendererInterface $htmlRenderer)
+    public function render(Node $inline, ChildNodeRendererInterface $htmlRenderer)
     {
         if (! ($inline instanceof Iframe)) {
-            throw new InvalidArgumentException('Incompatible inline type: ' . get_class($inline));
+            throw new InvalidArgumentException('Incompatible inline type: ' . $inline::class);
         }
 
         $src = "https://open.spotify.com/embed/{$inline->getUrl()->getType()}/{$inline->getUrl()->getUuid()}";
@@ -44,10 +40,10 @@ final class Renderer implements InlineRendererInterface
         }
 
         return new HtmlElement('iframe', [
-            'width' => $this->width,
-            'height' => $height ?: $this->height,
+            'width' => (string) $this->width,
+            'height' => (string) ($height ?: $this->height),
             'src' => $src,
-            'frameborder' => 0,
+            'frameborder' => '0',
             'allowfullscreen' => $this->allowFullScreen,
             'allow' => 'autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture',
         ]);

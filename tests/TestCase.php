@@ -2,10 +2,16 @@
 
 namespace Surface\CommonMark\Ext\SpotifyIframe\Tests;
 
+use League\CommonMark\Environment\Environment;
+use League\CommonMark\Extension\CommonMark\CommonMarkCoreExtension;
+use League\CommonMark\MarkdownConverter;
 use PHPUnit\Framework\TestCase as BaseTestCase;
+use Surface\CommonMark\Ext\SpotifyIframe\Extension;
 
 abstract class TestCase extends BaseTestCase
 {
+    protected MarkdownConverter $converter;
+
     public function themesProvider(): iterable
     {
         return [
@@ -39,6 +45,15 @@ abstract class TestCase extends BaseTestCase
 
     protected function getHtml(string $url, int $height): string
     {
-        return '<iframe width="100%" height="' . $height . '" src="' . $url . '" frameborder="0" allowfullscreen="1" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>';
+        return '<iframe width="100%" height="' . $height . '" src="' . $url . '" frameborder="0" allowfullscreen allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>';
+    }
+
+    protected function setUp(): void
+    {
+        $environment = new Environment();
+        $environment->addExtension(new CommonMarkCoreExtension());
+        $environment->addExtension(new Extension());
+
+        $this->converter = new MarkdownConverter($environment);
     }
 }
