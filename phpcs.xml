@@ -61,11 +61,11 @@
     </rule>
 
     <rule ref="Generic.Files.LineLength.TooLong">
-        <exclude-pattern>/tests/**/*.php</exclude-pattern>
+        <exclude-pattern>/tests/TestCase.php</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.Files.LineLength">
-        <exclude-pattern>/tests/**/*.php</exclude-pattern>
+        <exclude-pattern>/tests/TestCase.php</exclude-pattern>
     </rule>
 
     <rule ref="SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint.DisallowedMixedTypeHint">

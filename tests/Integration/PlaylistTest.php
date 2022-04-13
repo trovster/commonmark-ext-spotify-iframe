@@ -61,11 +61,6 @@ final class PlaylistTest extends TestCase
         $this->assertStringContainsString($this->getHtml($this->url, $width), $html);
     }
 
-    protected function getHtml(string $url, int $size): string
-    {
-        return '<iframe width="100%" height="' . $size . '" src="' . $url . '" frameborder="0" allowfullscreen="1" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>';
-    }
-
     protected function setUp(): void
     {
         $this->type = 'playlist';

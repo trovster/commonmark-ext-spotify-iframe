@@ -36,4 +36,9 @@ abstract class TestCase extends BaseTestCase
             yield 'lg size should have a width of 80' => ['lg', 380],
         ];
     }
+
+    protected function getHtml(string $url, int $height): string
+    {
+        return '<iframe width="100%" height="' . $height . '" src="' . $url . '" frameborder="0" allowfullscreen="1" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>';
+    }
 }
