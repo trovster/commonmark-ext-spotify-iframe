@@ -1,9 +1,13 @@
 # Changelog
 
-All notable changes to this project will be documented in this file.
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
-and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+## [2.1.0](https://github.com/trovster/commonmark-ext-spotify-iframe/compare/v2.0.0...v2.1.0) (2022-12-06)
+
+
+### Features
+
+* support configuration options ([8865441](https://github.com/trovster/commonmark-ext-spotify-iframe/commit/886544136745cde0d9e7ad2889d905e26d9f0c9c))
 
 ## [2.0.0] - 2022-04-13
 
