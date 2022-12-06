@@ -26,7 +26,9 @@ use League\CommonMark\MarkdownConverter as Converter;
 use Surface\CommonMark\Ext\SpotifyIframe\Extension as SpotifyExtension;
 
 $options = [
-    'spotify_size' => 'large',
+    'spotify_iframe' => [
+        'size' => 'large',
+    ],
 ];
 
 $environment = new Environment($options);
@@ -44,7 +46,7 @@ echo $converter->convert('[](https://open.spotify.com/embed/playlist/xxx?theme=1
 
 Spotify provides two different sizes, `large` and `small`. By default the
 extension provides the `large` version. You can configure the option globally
-using the `spotify_size` option.
+using the `size` option.
 
 You can also configure the *size* option using a query parameter on the embed
 URL. The supported sizes are `large`, `lg`, `small` and `sm`.

@@ -4,7 +4,10 @@ namespace Surface\CommonMark\Ext\SpotifyIframe;
 
 use League\CommonMark\Environment\EnvironmentBuilderInterface;
 use League\CommonMark\Event\DocumentParsedEvent;
+use League\CommonMark\Extension\ConfigurableExtensionInterface;
 use League\CommonMark\Extension\ExtensionInterface;
+use League\Config\ConfigurationBuilderInterface;
+use Nette\Schema\Expect;
 use Surface\CommonMark\Ext\SpotifyIframe\Iframe;
 use Surface\CommonMark\Ext\SpotifyIframe\Processor;
 use Surface\CommonMark\Ext\SpotifyIframe\Renderer;
@@ -13,7 +16,7 @@ use Surface\CommonMark\Ext\SpotifyIframe\Url\Parsers\Artist;
 use Surface\CommonMark\Ext\SpotifyIframe\Url\Parsers\Playlist;
 use Surface\CommonMark\Ext\SpotifyIframe\Url\Parsers\Track;
 
-final class Extension implements ExtensionInterface
+final class Extension implements ExtensionInterface, ConfigurableExtensionInterface
 {
     public function register(EnvironmentBuilderInterface $environment): void
     {
@@ -34,10 +37,18 @@ final class Extension implements ExtensionInterface
         ;
     }
 
+    public function configureSchema(ConfigurationBuilderInterface $builder): void
+    {
+        $builder->addSchema('spotify_iframe', Expect::structure([
+            'size' => Expect::string('large'),
+            'allowfullscreen' => Expect::bool(true),
+        ]));
+    }
+
     protected function getSize(EnvironmentBuilderInterface $environment): string
     {
-        if ($environment->getConfiguration()->exists('spotify_size')) {
-            return (string) $environment->getConfiguration()->get('spotify_size');
+        if ($environment->getConfiguration()->exists('spotify_iframe.size')) {
+            return (string) $environment->getConfiguration()->get('spotify_iframe.size');
         }
 
         return 'large';
@@ -45,8 +56,8 @@ final class Extension implements ExtensionInterface
 
     protected function allowFullscreen(EnvironmentBuilderInterface $environment): bool
     {
-        if ($environment->getConfiguration()->exists('spotify_allowfullscreen')) {
-            return (bool) $environment->getConfiguration()->get('spotify_allowfullscreen');
+        if ($environment->getConfiguration()->exists('spotify_iframe.allowfullscreen')) {
+            return (bool) $environment->getConfiguration()->get('spotify_iframe.allowfullscreen');
         }
 
         return true;
